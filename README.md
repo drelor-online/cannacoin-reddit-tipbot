@@ -53,7 +53,7 @@ On supported subreddits, you can send a tip like this:
 
   
 
-!ananos 1 This is great!
+    !ananos 1 This is great!
 
   
 
@@ -65,7 +65,7 @@ This will tip a redditor 1 Ananos. !ananos <amount> must be the first thing in y
 
   
 
-This is great! !ananos 1
+    This is great! !ananos 1
 
   
 
@@ -77,7 +77,7 @@ Or from anywhere on reddit, you can tip a commenter by mentioning the tip bot:
 
   
 
-/u/ananos_tipbot 1
+    /u/ananos_tipbot 1
 
   
   
@@ -106,7 +106,7 @@ To send 1 Ananos to rambamtyfyus, include this text in the message body:
 
   
 
-send 1 rambamtyfus
+    send 1 rambamtyfus
 
   
   
@@ -119,7 +119,7 @@ To send 1 Ananos to Stellar address GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6
 
   
 
-send 1 GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB
+    send 1 GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB
 
   
 
@@ -131,7 +131,7 @@ or send all your balance:
 
   
 
-send all GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB
+    send all GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB
 
   
 
