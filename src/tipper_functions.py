@@ -3,56 +3,60 @@ from shared import (
     TIP_BOT_USERNAME,
     LOGGER,
     TIP_COMMANDS,
-    to_raw,
+    db,
+    from_stroop,
+    to_stroop,
     History,
     Account,
-    Message
+    ACCOUNT,
+    Transaction,
+    Message,
+    REDDIT,
+    NumberUtil,
+    SpamEntry,
+    SPAM_ENTRIES
 )
-
-from text import SUBJECTS
-
-from tipper_rpc import generate_account, check_balance, send
+from text import SUBJECTS, COMMENT_FOOTER, StatusResponse, SEND_TEXT
 import text
+import re
 import shared
+import tipper_rpc
 
 
 def add_history_record(
     username=None,
     action="unknown",
-    address=None,
     comment_or_message=None,
     recipient_username=None,
-    recipient_address=None,
     amount=None,
-    hash=None,
     comment_id=None,
     notes=None,
     reddit_time=None,
     comment_text=None,
 ):
+    try:
+        account = Account.get(Account.username == str(username))
+    except Account.DoesNotExist:
+        LOGGER.exception(f"Tried to add a history record for an unknown user: {username}")
+        return False
     if action is None:
         action = "unknown"
     if reddit_time is None:
         reddit_time=datetime.utcnow()
     history = History(
-        username=username,
+        account=account,
         action=action,
-        address=address,
         comment_or_message=comment_or_message,
         recipient_username=recipient_username,
-        recipient_address=recipient_address,
         amount=amount,
-        hash=hash,
         comment_id=comment_id,
         notes=notes,
         reddit_time=reddit_time,
-        comment_text=comment_text
-        
+        comment_text=comment_text        
     )
-
     if history.save() < 1:
         LOGGER.error(f"Failed saving history item {username}")
-
+        return False
     return history.id
 
 
@@ -61,14 +65,12 @@ def make_graceful(func):
     Wrapper for inherited GracefulList methods that otherwise return a list
     100% unncecessary, only used for list __add__ at the moment
     """
-
     def wrapper(*args, **kwargs):
         res = func(*args, **kwargs)
         if isinstance(res, list):
             return GracefulList(func(*args, **kwargs))
         else:
             return res
-
     return wrapper
 
 
@@ -76,7 +78,6 @@ class TipError(Exception):
     """
     General tiperror exception
     """
-
     def __init__(self, sql_text, response):
         self.sql_text = sql_text
         self.response = response
@@ -86,10 +87,8 @@ class GracefulList(list):
     """
     GracefulList is a list that returns None if there is an index error.
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
     def __getitem__(self, name):
         try:
             if isinstance(name, int):
@@ -97,7 +96,6 @@ class GracefulList(list):
             return GracefulList(super().__getitem__(name))
         except IndexError:
             return None
-
     @make_graceful
     def __add__(self, other):
         return super().__add__(other)
@@ -109,174 +107,134 @@ def parse_text(text):
 
 
 def add_new_account(username):
-    address, pk = generate_account()
-    if address is None:
-        LOGGER.error("Failed to create account!")
-        return None
-    acct = Account(
-        username=username,
-        private_key=pk,
-        address=address,
-        silence=False,
-        active=False,
-        opt_in=True
+    username = str(username)
+    memo = username.lower()
+    account = Account(
+        username = username,
+        memo = memo,
+        balance = 0,
+        silence = False,
+        active = False,
+        opt_in = True
     )
-    acct.save(force_insert=True)
+    account.save(force_insert=True)
     return {
         "username": username,
-        "address": address,
-        "private_key": pk,
+        "memo": memo,
         "silence": False,
         "balance": 0,
         "account_exists": True,
     }
 
 
-def activate(author):
-    Account.update(active=True).where(Account.username == str(author)).execute()
+def activate(username):
+    Account.update(active=True).where(Account.username == str(username)).execute()
 
-def allowed_request(username, seconds=30, num_requests=5):
-    """Spam prevention
-    :param username: str (username)
-    :param seconds: int (time period to allow the num_requests)
-    :param num_requests: int (number of allowed requests)
-    :return:
-    """
-    historyQ = History.select(History.sql_time).where(History.username == str(username)).order_by(History.id)
-    history_list = [h for h in historyQ]
-    if len(history_list) < num_requests:
-        return True
+
+def allowed_request(username, seconds=30, num_requests=4):
+    if str(username) in SPAM_ENTRIES:
+        stats = SPAM_ENTRIES[str(username)]        
+        time_passed = (datetime.utcnow() - stats.date).seconds
+        if time_passed <= seconds and stats.requests >= num_requests:
+            return False
+        if time_passed > seconds:
+            stats.date = datetime.utcnow()
+            stats.requests = 1
+        else:
+            stats.requests += 1
     else:
-        i = 0
-        for h in history_list:
-            i+=1
-            if i == 5:
-                return (
-                    datetime.utcnow() - h.sql_time
-                ).total_seconds() > seconds
+        stats = SpamEntry (datetime.utcnow(), 1)
+        SPAM_ENTRIES[str(username)] = stats
+    # Delete first key from dict if possible
+    first_key = next(iter(SPAM_ENTRIES))
+    oldest_time = (datetime.utcnow() - SPAM_ENTRIES[first_key].date).seconds
+    if oldest_time > seconds:
+        del SPAM_ENTRIES[first_key]
+
+    return True
 
 
-def check_registered_by_address(address):
-    address = address.split("_")[1]
+def memo_to_username(memo):
+    try:
+        account = Account.select().where(Account.memo == str(memo)).get()
+    except Account.DoesNotExist:
+        return None
+    return account.username
 
-    if shared.CURRENCY == "Nano":
-        try:
-            acct = Account.get(address=f"nano_{address}")
-            return acct.address
-        except Account.DoesNotExist:
-            pass
-
-        try:
-            acct = Account.get(address=f"xrb_{address}")
-            return acct.address
-        except Account.DoesNotExist:
-            pass
-    elif shared.CURRENCY == "Banano":
-        try:
-            acct = Account.get(address=f"ban_{address}")
-            return acct.address
-        except Account.DoesNotExist:
-            pass
-
-    return None
-
-
-def get_user_settings(recipient_username, recipient_address=""):
-    """
-
-    :param recipient_username: str
-    :param recipient_address: str
-    :return: 3 items to unpack - int, str, bool
-    """
-    silence = False
-    if recipient_username:
-        try:
-            acct = Account.select(Account.minimum, Account.address, Account.silence).where(Account.username == recipient_username).get()
-            silence = acct.silence
-            if not recipient_address:
-                recipient_address = acct.address
-        except Account.DoesNotExist:
-            pass
-    return {
-        "name": recipient_username,
-        "address": recipient_address,
-        "silence": silence,
-    }
-
-
-def account_info(key, by_address=False):
+def account_info(username):
     """
     Pulls the address, private key and balance from a user
     :param username: string - redditors username
     :return: dict - name, address, private_key, balance
     """
     foundAccount = True
-    if not by_address:
-        try:
-            acct = Account.select().where(Account.username == key).get()
-        except Account.DoesNotExist:
-            foundAccount = False
-    else:
-        try:
-            acct = Account.select().where(Account.address == key).get()
-        except Account.DoesNotExist:
-            foundAccount = False
+    try:
+        account = Account.select().where(Account.username == str(username)).get()
+    except Account.DoesNotExist:
+        foundAccount = False
     if foundAccount:
         return {
-            "username": acct.username,
-            "address": acct.address,
-            "private_key": acct.private_key,
-            "silence": acct.silence,
-            "balance": check_balance(acct.address),
+            "username": account.username,
+            "memo": account.memo,
+            "silence": account.silence,
+            "balance": account.balance,
             "account_exists": True,
-            "opt_in": acct.opt_in,
+            "opt_in": account.opt_in,
         }
     return None
 
+@db.atomic()
+def account_tip(from_username, to_username, amount):
+    Account.update(balance = Account.balance - amount).where(Account.username == from_username).execute()
+    Account.update(balance = Account.balance + amount).where(Account.username == to_username).execute()
 
-def update_history_notes(entry_id, text):
-    History.update(notes=text).where(History.id == entry_id).execute()
+def account_add_balance(username, amount):
+    Account.update(balance = Account.balance + amount).where(Account.username == username).execute()
+    return None
+
+def account_subtract_balance(username, amount):
+    Account.update(balance = Account.balance - amount).where(Account.username == username).execute()
+    return None
 
 
-def send_pm(recipient, subject, body, bypass_opt_out=False):
+def update_history_notes(id, text):
+    History.update(notes = text).where(History.id == id).execute()
+
+
+def send_pm(username, subject, body, bypass_opt_out = False):
     opt_in = True
     # If there is not a bypass to opt in, check the status
-    if not bypass_opt_out:
-        try:
-            acct = Account.select(Account.opt_in).where(Account.username == recipient).get()
-            opt_in = acct.opt_in
-        except Account.DoesNotExist:
-            pass
+    try:
+        account = Account.get(Account.username == str(username))
+        opt_in = account.opt_in
+    except Account.DoesNotExist:        
+        pass
     # if the user has opted in, or if there is an override to send the PM even if they have not
-    if opt_in or not bypass_opt_out:
+    if opt_in or bypass_opt_out:
         msg = Message(
-            username = recipient,
+            username = str(username),
             subject = subject,
-            message = body
+            body = body
         )
         msg.save()
 
 
-def parse_raw_amount(parsed_text, username=None):
+def parse_stroop_amount(parsed_text, username = None):
     """
-    Given some parsed command text, converts the units to Raw nano
+    Given some parsed command text, converts the units to stroop
     :param parsed_text:
     :param username: required if amount is 'all'
     :return:
     """
-    conversion = 1
     # check if the amount is 'all'. This will convert it to the proper int
     if parsed_text[1].lower() == "all":
         try:
-            acct = Account.select(Account.address).where(Account.username == username).get()
-            address = acct.address
-            balance = check_balance(address)
+            account = Account.select(Account.balance).where(Account.username == str(username)).get()
+            balance = account.balance
             return balance
         except Account.DoesNotExist:
             raise (TipError(None, text.NOT_OPEN))
-
-    amount = parsed_text[1].lower()
-
+    amount = parsed_text[1].lower()    
     # before converting to a number, make sure the amount doesn't have nan or inf in it
     if amount == "nan" or ("inf" in amount):
         raise TipError(
@@ -285,27 +243,35 @@ def parse_raw_amount(parsed_text, username=None):
         )
     else:
         try:
-            amount = to_raw(float(amount) / conversion)
+            amount = to_stroop(float(amount))
         except:
             raise TipError(
                 None,
                 f"Could not read your tip or send amount. Is '{amount}' a number, or is the "
-                "currency code valid? If you are trying to send Nano directly, omit "
-                "'Nano' from the amount (I will fix this in a future update).",
+                "currency code valid?",
             )
     return amount
 
 
+def message_in_database(message):
+    exists = History.select().where(History.comment_id == message.name).count()
+    if exists > 0:
+        LOGGER.info("Found previous messages for %s: " % message.name)
+        return True
+    return False
+
+
 def parse_action(action_item):
     if action_item is not None:
-        parsed_text = parse_text(str(action_item.body))
+        parsed_text = parse_text(str(action_item.body).lower())
     else:
         return None
     if message_in_database(action_item):
         return "replay"
-    elif not allowed_request(action_item.author, 30, 5):
+    elif not allowed_request(action_item.author):
         return "ignore"
-    # check if it's a non-username post and if it has a tip or donate command
+    # Check if it's a non-username post and if it has a tip or donate command
+    # t1_: comment designation
     elif action_item.name.startswith("t1_") and bool(
         {parsed_text[0], parsed_text[-2], parsed_text[-3]}
         & (
@@ -316,29 +282,81 @@ def parse_action(action_item):
     ):
         LOGGER.info(f"Comment: {action_item.author} - " f"{action_item.body[:20]}")
         return "comment"
-    # otherwise, lets parse the message. t4 means either a message or username mention
+    # Otherwise, lets parse the message.
+    # t4_: message/username
     elif action_item.name.startswith("t4_"):
-        # check if it is a message from the bot.
-        if action_item.author == TIP_BOT_USERNAME:
-            # check if its a send, otherwise ignore
-            if action_item.body.startswith("send 0.001 "):
-                LOGGER.info(
-                    f"Faucet Tip: {action_item.author} - {action_item.body[:20]}"
-                )
-                return "faucet_tip"
-            else:
-                return "ignore"
-        # otherwise, it's a normal message
-        else:
-            LOGGER.info(f"Comment: {action_item.author} - " f"{action_item.body[:20]}")
-            return "message"
+        LOGGER.info(f"Comment: {action_item.author} - " f"{action_item.body[:20]}")
+        return "message"
     return None
 
-
-def message_in_database(message):
-    query = History.select().where(History.comment_id == message.name)
-    results = [r for r in query]
-    if len(results) > 0:
-        LOGGER.info("Found previous messages for %s: " % message.name)
-        return True
-    return False
+def handle_transactions():
+    transactions = tipper_rpc.get_incoming_transactions()
+    for transaction in transactions:
+        if (datetime.utcnow() - transaction["date"]).days > 7:
+            break # Don't process old transactions
+        try:
+            record = Transaction.get(Transaction.hash == transaction['hash'])
+            # If this transaction exists in the database, older transactions are assumed to exist as well.
+            break
+        except Transaction.DoesNotExist:    
+            # Get payments associated with the transaction.    
+            payments = tipper_rpc.get_transaction_payments(transaction['hash'])
+            amount = 0
+            for payment in payments:
+                if payment["to"] == ACCOUNT and payment["asset"] == "ananos":
+                    amount += payment["amount"]
+            record = Transaction (
+                time = transaction['date'],
+                source_account = transaction['source_account'],
+                destination_account = ACCOUNT,
+                hash = transaction['hash'],
+                amount = amount,
+                memo = transaction['memo'],
+            )
+            record.save()
+            fee = tipper_rpc.get_fee()            
+            # Don't process a transaction with zero amount of Ananos.
+            if amount <= 0:
+                continue
+            # Check for memo
+            if not transaction["memo"]:
+                LOGGER.info(f"Returning deposited Ananos, no user specified: {transaction['hash']} {transaction['source_account']} {amount}")
+                tipper_rpc.send_payment(transaction["source_account"], amount, "no user specified", fee)            
+                Transaction.update(notes = "no user specified").where(Transaction.hash == transaction['hash']).execute()
+                continue
+            # Get recipient username
+            memo_name = transaction["memo"].lower()
+            if memo_name[:3] == "/u/":
+                memo_name = memo_name[3:]
+            elif memo_name[:2] == "u/":
+                memo_name = memo_name[2:]    
+            recipient_name = memo_to_username(memo_name)                
+            try:
+                _ = getattr(REDDIT.redditor(recipient_name), "is_suspended", False)                
+            except:
+                LOGGER.info(f"Returning deposited Ananos, user unknown: {transaction['hash']} {transaction['source_account']} {amount}  {transaction['memo']}")
+                tipper_rpc.send_payment(transaction["source_account"], amount, "unknown user specified", fee)            
+                Transaction.update(notes = "unknown user").where(Transaction.hash == transaction['hash']).execute()
+                continue
+            # Get account info            
+            recipient_info = account_info(recipient_name)            
+            if recipient_info is None: 
+                LOGGER.info(f"Returning deposited Ananos, user has no account: {transaction['hash']} {transaction['source_account']} {amount}  {transaction['memo']}")
+                tipper_rpc.send_payment(transaction["source_account"], amount, "user has no account", fee)            
+                Transaction.update(notes = "user has no account").where(Transaction.hash == transaction['hash']).execute()
+                continue
+            # Add the funds
+            account_add_balance(recipient_info['username'], amount)            
+            Transaction.update(notes = "deposited").where(Transaction.hash == transaction['hash']).execute()
+            if not recipient_info["silence"]:
+                subject = text.SUBJECTS["deposit"]
+                message_text = SEND_TEXT[StatusResponse.DEPOSIT] % (NumberUtil.format_float(from_stroop(amount)), recipient_info["username"]) + COMMENT_FOOTER
+                send_pm(recipient_info["username"], subject, message_text)          
+                add_history_record(
+                    username = recipient_info['username'],
+                    action = "receive",
+                    amount = amount,
+                    comment_or_message = "message",
+                    comment_text = transaction['source_account'],
+                    notes = "received from address"
+                )                      
