@@ -1,4 +1,4 @@
-name: banano-reddit-tipbot
+name: ananos-reddit-tipbot
 channels:
   - defaults
 dependencies:
