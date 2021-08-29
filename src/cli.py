@@ -2,7 +2,7 @@ import os
 import click
 import tipper_sql
 import tipper_rpc
-from shared import LOGGER, to_stroop
+from shared import LOGGER, to_raw
 
 @click.group()
 def cli():
@@ -18,7 +18,7 @@ def subreddit(subreddit, status, delete):
         tipper_sql.rm_subreddit(subreddit)
 
     else:
-        if status not in ["full", "silent"]:
+        if status not in ["full", "minimal", "silent"]:
             raise ValueError(f"'{status}' is not an acceptable subreddit status.")
         try:
             tipper_sql.add_subreddit(subreddit, True, "", status)

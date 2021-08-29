@@ -31,13 +31,13 @@ jobs:
 
       - name: Build and tag
         if: success()
-        run: docker build -t ananos/reddit-bot:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }} .
+        run: docker build -t bananocoin/reddit-bot:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }} .
 
       - name: Push image   
         if: success()
         uses: actions-hub/docker@master
         with:
-          args: push ananos/reddit-bot:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
+          args: push bananocoin/reddit-bot:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
 
   deploy:
     name: Deploy reddit app
@@ -64,7 +64,7 @@ jobs:
       - name: Set image
         working-directory: ./kubernetes
         run: |
-          kustomize edit set image replaceme=ananos/reddit-bot:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
+          kustomize edit set image replaceme=bananocoin/reddit-bot:${{ env.BRANCH_NAME }}-${{ env.GITHUB_RUN_ID }}
           kustomize build . > deployment-k.yaml
 
       - name: Deploy image to k8s cluster
