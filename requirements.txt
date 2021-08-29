@@ -1,12 +1,10 @@
 requests
-praw==7.2.0
+praw==7.4.0
 qrcode==6.1
 click
 black
 pytest
-peewee
 pymysql
 psycopg2-binary
-pylint
-nanopy
-bitstring
+peewee
+stellar-sdk
