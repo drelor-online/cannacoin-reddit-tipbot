@@ -11,7 +11,7 @@
 
   
 
-It is a fork and modification of the [Banano](https://banano.cc) reddit tipbot created by /u/bbedward - which is available on [GitHub](https://github.com/BananoCoin/banano_reddit_tipbot).
+It is a fork and modification of the [Banano](https://banano.cc) reddit tip bot created by /u/bbedward - which is available on [GitHub](https://github.com/BananoCoin/banano_reddit_tipbot).
 
   
 
@@ -53,7 +53,7 @@ On supported subreddits, you can send a tip like this:
 
   
 
-    !ananos 1 This is great!
+`!ananos 1 This is great!`
 
   
 
@@ -65,7 +65,7 @@ This will tip a redditor 1 Ananos. !ananos <amount> must be the first thing in y
 
   
 
-    This is great! !ananos 1
+`This is great! !ananos 1`
 
   
 
@@ -77,7 +77,7 @@ Or from anywhere on reddit, you can tip a commenter by mentioning the tip bot:
 
   
 
-    /u/ananos_tipbot 1
+`/u/ananos_tipbot 1`
 
   
   
@@ -106,7 +106,7 @@ To send 1 Ananos to rambamtyfyus, include this text in the message body:
 
   
 
-    send 1 rambamtyfus
+`send 1 rambamtyfus`
 
   
   
@@ -119,7 +119,7 @@ To send 1 Ananos to Stellar address GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6
 
   
 
-    send 1 GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB
+`send 1 GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB`
 
   
 
@@ -131,11 +131,11 @@ or send all your balance:
 
   
 
-    send all GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB
+`send all GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB`
 
   
 
-*Note that the address you are sending to must have a trustline with Ananos address on Stellar ( GAB4YW6ZBV73IFQDSVYGKOXTLWX67LUDXRAXHUW2U5EXIFCMAWYHEHL7) and it cannot be an exchange wallet.*
+*Note that the address you are sending to must have a trustline with Ananos address on Stellar (GAB4YW6ZBV73IFQDSVYGKOXTLWX67LUDXRAXHUW2U5EXIFCMAWYHEHL7) and you cannot send from an exchange wallet.*
 
   
 
@@ -146,8 +146,6 @@ There are many other commands.
   
 
 ```
-
-  
 
 'balance' or 'address' - Retrieve your account balance.
 
@@ -161,7 +159,7 @@ There are many other commands.
 
   
 
-'history <optional: number of records>' - Retrieves tipbot commands.
+'history <optional: number of records>' - Retrieves tip bot commands.
 
   
 
@@ -183,13 +181,11 @@ There are many other commands.
 
 'opt-in' - Re-enables your account.
 
-  
-
 ```
 
   
 
-### Control TipBot Behavior On Your Subreddit
+### Control tip bot Behavior on your subreddit
 
   
 
