@@ -196,7 +196,6 @@ def account_subtract_balance(username, amount):
     Account.update(balance = Account.balance - amount).where(Account.username == username).execute()
     return None
 
-
 def update_history_notes(id, text):
     History.update(notes = text).where(History.id == id).execute()
 

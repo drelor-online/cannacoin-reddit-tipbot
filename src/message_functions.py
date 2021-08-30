@@ -1,5 +1,6 @@
 import sys
 from datetime import datetime
+from peewee import fn
 import tipper_functions
 import text
 from tipper_functions import (
@@ -27,7 +28,7 @@ from shared import (
     REDDIT,
     LOGGER,
     ACCOUNT,
-    TIPBOT_OWNER,
+    TIPBOT_OWNERS,
     to_stroop,
     from_stroop,
     Account,
@@ -84,8 +85,12 @@ def handle_message(message):
         LOGGER.info("opting in")
         subject = text.SUBJECTS["opt-in"]
         response = handle_opt_in(message)
+    elif command == "stats":
+        LOGGER.info("stats")
+        subject = text.SUBJECTS["stats"]
+        response = handle_stats(message)        
     # a few administrative tasks
-    elif command == "restart" and username == TIPBOT_OWNER:
+    elif command == "restart" and username in TIPBOT_OWNERS:
         add_history_record(
             username = username,
             action = "restart",
@@ -329,6 +334,23 @@ def handle_subreddit(message):
     # only 4 word commands after this point
     if len(parsed_text) < 4:
         return text.SUBREDDIT["error"]
+
+
+def handle_stats(message):
+    if not str(message.author).lower() in TIPBOT_OWNERS:
+        return text.SUBREDDIT["not_maintainer"]
+    off_chain_balance = Account.select(fn.SUM(Account.balance).alias('sum_balance')).get()
+    response = f"Off-chain balance: {off_chain_balance.sum_balance:.2f} Ananos  \n\n"
+    on_chain_balances = get_balances()
+    if "ananos" in on_chain_balances:
+        balance = on_chain_balances["ananos"]
+        response += f"On-chain balance: {balance:.2f} Ananos  \n\n"
+    response += "\nTop accounts:  \n\n"
+    accounts = Account.select(Account.username, Account.balance).order_by(Account.balance.desc()).limit(10)
+    for idx, account in enumerate(accounts):
+        response += f"{idx:02d}. {account.username} | {account.balance:.2f} Ananos  \n\n"
+    return response  
+
 
 
 def handle_send(message):

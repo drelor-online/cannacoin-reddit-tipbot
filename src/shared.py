@@ -25,7 +25,7 @@ try:
     TIP_BOT_USERNAME = config["BOT"]["tip_bot_username"]
     PROGRAM_MINIMUM = float(config["BOT"]["program_minimum"])
     TIP_COMMANDS = config["BOT"]["tip_commands"].split(",")
-    TIPBOT_OWNER = config["BOT"]["tipbot_owner"]
+    TIPBOT_OWNERS = config["BOT"]["tipbot_owners"].split(",")
     MAIN_SUB = config["BOT"]["main_sub"]
     PYTHON_COMMAND = config["BOT"]["python_command"]
     CURRENCY = config["BOT"]["currency"]

@@ -104,6 +104,7 @@ SUBJECTS = {
     "success": "Ananos Tipper - Your Tip Was Successful",
     "failure": "Ananos Tipper - You Tip Did Not Go Through",
     "convert": "Ananos Tipper - Your Currency Conversion",
+    "stats": "Ananos Tipper - Statistics"
 }
 
 MINIMUM = {
@@ -180,6 +181,7 @@ SUBREDDIT = {
     "missing": "Your command seems to be missing something. Make sure it follow the format `subreddit <subreddit> "
     "<command> <option>.`",
     "not_mod": "You are not a moderator of /r/%s.",
+    "not_maintainer": "You are not a bot maintainer.",
     "minimum": "Sucessfully set your /r/%s minimum to %s, active immediately.",
     "deactivate": "Within 5 minutes, tipping will be deactivated in your subreddit %s.",
     "activate": "Within 5 minutes, the Ananos Tipper response in your Subreddit will be set to %s.",
