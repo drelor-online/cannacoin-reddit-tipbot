@@ -114,6 +114,7 @@ def handle_balance(message):
     )  # time the reddit message was created
     try:
         account = Account.get(username=username)
+        account_info = tipper_functions.account_info(username)
         results = account.balance
         add_history_record(
             username = str(message.author),
@@ -124,7 +125,7 @@ def handle_balance(message):
             comment_text = str(message.body)[:255],
         )
         response = text.BALANCE % (
-            from_stroop(results),
+            from_stroop(results), ACCOUNT, account_info["memo"]
         )
         return response        
     except Account.DoesNotExist:
@@ -340,15 +341,15 @@ def handle_stats(message):
     if not str(message.author).lower() in TIPBOT_OWNERS:
         return text.SUBREDDIT["not_maintainer"]
     off_chain_balance = Account.select(fn.SUM(Account.balance).alias('sum_balance')).get()
-    response = f"Off-chain balance: {off_chain_balance.sum_balance:.2f} Ananos  \n\n"
+    response = f"Off-chain balance: {from_stroop(off_chain_balance.sum_balance):.2f} Ananos  \n\n"
     on_chain_balances = get_balances()
     if "ananos" in on_chain_balances:
         balance = on_chain_balances["ananos"]
-        response += f"On-chain balance: {balance:.2f} Ananos  \n\n"
+        response += f"On-chain balance: {from_stroop(balance):.2f} Ananos  \n\n"
     response += "\nTop accounts:  \n\n"
     accounts = Account.select(Account.username, Account.balance).order_by(Account.balance.desc()).limit(10)
     for idx, account in enumerate(accounts):
-        response += f"{idx:02d}. {account.username} | {account.balance:.2f} Ananos  \n\n"
+        response += f"{idx:02d}. {account.username} | {from_stroop(account.balance):.2f} Ananos  \n\n"
     return response  
 
 
