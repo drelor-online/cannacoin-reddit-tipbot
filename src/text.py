@@ -61,7 +61,7 @@ There are also PM commands by [messaging](https://reddit.com/message/compose/?to
 
 WELCOME_TIP = """
 Welcome to Ananos Tipper, a reddit tip bot which allows you to tip and send the [Ananos](https://ananos.tk) Currency to your favorite redditors! 
-You have just received a Ananos tip in the amount of ```%s Ananos.\n\n
+You have just received a Ananos tip in the amount of %s Ananos.\n\n
 By using this service, you agree to the [Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service).\n\n
 
 If you do not accept the Terms of Service, or do not with to participate, please respond with the text `opt-out`.\n\n
@@ -77,7 +77,7 @@ There are also PM commands by [messaging](https://reddit.com/message/compose/?to
 ```send <amount> <redditor username>``` Send Ananaos to another redditor.\n\n
 ```balance``` Check your account balance.\n\n
 ```help``` Receive an in-depth help message.\n\n
-To deposit Ananos in your tip bot account, send some to the tip bot address: %s. Be sure to specify your deposit memo `%s`!\n
+To deposit Ananos in your tip bot account, send some to the tip bot address: `%s`. Be sure to specify your deposit memo `%s`!\n
 Do not deposit Ananos directly from an exchange. 
 """
 
@@ -213,7 +213,9 @@ ALREADY_EXISTS = (
 
 BALANCE = (
     "Your balance is:\n\n"
-    "**%s Ananos**"
+    "**%s Ananos**\n\n"
+    "To deposit Ananos in your tip bot account, send some to the tip bot address: `%s`. Be sure to specify your deposit memo `%s`!\n\n"
+    "Do not deposit Ananos directly from an exchange.\n"
 )
 
 
