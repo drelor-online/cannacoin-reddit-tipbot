@@ -116,14 +116,6 @@ def handle_balance(message):
         account = Account.get(username=username)
         account_info = tipper_functions.account_info(username)
         results = account.balance
-        add_history_record(
-            username = str(message.author),
-            comment_or_message = "message",
-            reddit_time = message_time,
-            action = "balance",
-            comment_id = message.name,
-            comment_text = str(message.body)[:255],
-        )
         response = text.BALANCE % (
             from_stroop(results), ACCOUNT, account_info["memo"]
         )
