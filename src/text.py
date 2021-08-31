@@ -10,7 +10,7 @@ COMMENT_FOOTER = """\n\n
 """
 
 HELP = """
-Help from Ananos Tipper! This bot handles tips via the [Ananos](https://ananos.tk) currency.
+Help from Stellar Ananos Tipper! This bot handles tips via the Stellar [Ananos](https://ananos.tk) currency.
 [Visit us on GitHub](https://github.com/swartbeens/ananos_reddit_tipbot) for more information on its use and its status. Be sure to read the 
 [Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service)\n\n
 
@@ -39,7 +39,7 @@ If you have any questions or bug fixes, please reach out on the [Ananos subreddi
 The Ananos tip bot is based on the Banano tipbot. Check out the [Banano subreddit](https://reddit.com/r/banano) as well!"""
 
 WELCOME_CREATE = """
-Welcome to Ananos Tipper, a reddit tip bot which allows you to tip and send the [Ananos](https://Ananos.cc) currency to your favorite redditors! 
+Welcome to Stellar Ananos Tipper, a reddit tip bot which allows you to tip and send the [Ananos](https://Ananos.cc) currency to your favorite redditors! 
 Your account is **active**.\nDeposit Ananos by sending it to the address `%s` using your Ananos deposit memo `%s`. By using this service, you agree 
 to the [Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service).\n\n
 
@@ -60,7 +60,7 @@ There are also PM commands by [messaging](https://reddit.com/message/compose/?to
 """
 
 WELCOME_TIP = """
-Welcome to Ananos Tipper, a reddit tip bot which allows you to tip and send the [Ananos](https://ananos.tk) Currency to your favorite redditors! 
+Welcome to Stellar Ananos Tipper, a reddit tip bot which allows you to tip and send the [Ananos](https://ananos.tk) Currency to your favorite redditors! 
 You have just received a Ananos tip in the amount of %s Ananos.\n\n
 By using this service, you agree to the [Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service).\n\n
 
@@ -82,7 +82,7 @@ Do not deposit Ananos directly from an exchange.
 """
 
 NEW_TIP = """
-Somebody just tipped you %s Ananos! Your juicy new account balance is:\n\n
+Somebody just tipped you %s Stellar Ananos! Your juicy new account balance is:\n\n
 **%s Ananos**\n\n
 To turn off these notifications, reply with "silence yes".
 """
@@ -140,17 +140,17 @@ class StatusResponse(IntEnum):
 # full responses
 SEND_TEXT = {
     StatusResponse.SENT_TO_EXISTING_USER: (
-        "Sent ```%s Ananos``` to /u/%s"
+        "Sent ```%s Stellar Ananos``` to /u/%s"
     ),
     StatusResponse.SENT_TO_ADDRESS: (
-        "Sent ```%s Ananos``` to %s"
+        "Sent ```%s Stellar Ananos``` to %s"
     ),
     StatusResponse.SENT_TO_NEW_USER: (
         "Creating a new account and "
-        "sent ```%s Ananos``` to /u/%s."
+        "sent ```%s Stellar Ananos``` to /u/%s."
     ),
     StatusResponse.DEPOSIT: (
-        "A deposit of ```%s Ananos``` was sent to you (/u/%s)."
+        "A deposit of ```%s Stellar Ananos``` was sent to you (/u/%s)."
     ),    
     StatusResponse.NO_ACCOUNT: (
         "You don't have an account yet. Please PM me with `create` in the body to "
