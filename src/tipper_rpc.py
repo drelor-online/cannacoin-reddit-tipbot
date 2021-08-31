@@ -1,5 +1,5 @@
 from datetime import datetime
-from stellar_sdk import Server, Account, Keypair, Network, TransactionBuilder
+from stellar_sdk import Server, Account, Keypair, Network, TransactionBuilder, Asset
 from stellar_sdk.exceptions import SdkError
 
 from shared import (
@@ -32,7 +32,6 @@ def get_fee():
 
 # Check if an account is open.
 def is_account_open(account):
-    balances = {}
     try:
         accounts = server.accounts().account_id(account).call()
         return True
@@ -40,12 +39,21 @@ def is_account_open(account):
         pass
     return False
 
+# Check if an account is open.
+def account_has_trustline(account, asset_name, asset_issuer):    
+    try:
+        asset = Asset(asset_name, asset_issuer)
+        accounts = server.accounts().account_id(account).for_asset(asset).call()
+        return True
+    except SdkError:
+        pass
+    return False
 
 # Get balances of XLM and assets in the main account.
-def get_balances():
+def get_balances(account):
     balances = {}
     try:
-        accounts = server.accounts().account_id(ACCOUNT).call()
+        accounts = server.accounts().account_id(account).call()
         for balance in accounts["balances"]:
             if balance["asset_type"] == "native":
                 balances["xlm"] = to_stroop(balance["balance"])    
@@ -80,6 +88,8 @@ def get_transaction_payments(transaction_hash):
                 asset = payment["asset_code"].lower()
             else:
                 asset = "xlm"
+            if not "amount" in payment:
+                continue
             payments.append({"from": payment["from"], "to": payment["to"], "asset": asset, "amount": to_stroop(str(payment["amount"]))})
     except SdkError:
         LOGGER.exception("Cannot get transaction state for %s" % transaction_hash)

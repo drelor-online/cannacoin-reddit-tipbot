@@ -20,6 +20,7 @@ from tipper_rpc import (
     get_fee,
     get_balances,
     is_account_open,
+    account_has_trustline,
     send_payment,
 )
 from text import WELCOME_CREATE, WELCOME_TIP, COMMENT_FOOTER, NEW_TIP, StatusResponse
@@ -28,6 +29,8 @@ from shared import (
     REDDIT,
     LOGGER,
     ACCOUNT,
+    CURRENCY,
+    CURRENCY_ISSUER,
     TIPBOT_OWNERS,
     to_stroop,
     from_stroop,
@@ -334,9 +337,9 @@ def handle_stats(message):
         return text.SUBREDDIT["not_maintainer"]
     off_chain_balance = Account.select(fn.SUM(Account.balance).alias('sum_balance')).get()
     response = f"Off-chain balance: {from_stroop(off_chain_balance.sum_balance):.2f} Ananos  \n\n"
-    on_chain_balances = get_balances()
-    if "ananos" in on_chain_balances:
-        balance = on_chain_balances["ananos"]
+    main_account_balances = get_balances(ACCOUNT)
+    if "ananos" in main_account_balances:
+        balance = main_account_balances["ananos"]
         response += f"On-chain balance: {from_stroop(balance):.2f} Ananos  \n\n"
     response += "\nTop accounts:  \n\n"
     accounts = Account.select(Account.username, Account.balance).order_by(Account.balance.desc()).limit(10)
@@ -422,10 +425,13 @@ def handle_send(message):
     if "address" in recipient_info.keys():
         fee = get_fee()
         response["recipient"] = recipient_info["address"]
-        main_account_balances = get_balances()
+        main_account_balances = get_balances(ACCOUNT)
         if main_account_balances["xlm"] <= to_stroop(1.0) + fee:
             response["status"] = StatusResponse.NOT_ENOUGH_XLM
             return response
+        if not account_has_trustline(recipient_info["address"], CURRENCY, CURRENCY_ISSUER):
+            response["status"] = StatusResponse.NO_TRUSTLINE
+            return response            
         LOGGER.info(f"Sending Ananos: {sender_info['username']} {sender_info['memo']} {recipient_info['address']} {response['amount']}")
         succeeded = send_payment(recipient_info["address"], response["amount"], sender_info["memo"], fee)
         if succeeded:
