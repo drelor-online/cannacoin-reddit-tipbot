@@ -378,3 +378,5 @@ If a reddit tip is a reply to a reply, it's better to keep a short message with 
 * 210 - Failed to send funds to Stellar address. Check that you have a trustline with Ananos and enough XLM funds.
 
 * 220 - Not enough XLM to perform withdrawal.
+
+* 230 - Withdrawal account has no Ananos trustline.

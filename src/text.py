@@ -136,6 +136,7 @@ class StatusResponse(IntEnum):
     CANNOT_SEND_TO_YOURSELF = 200
     SEND_TO_ADDRESS_FAILED = 210
     NOT_ENOUGH_XLM = 220
+    NO_TRUSTLINE = 230
 
 # full responses
 SEND_TEXT = {
@@ -166,7 +167,8 @@ SEND_TEXT = {
     StatusResponse.USER_OPTED_OUT: "Sorry, the user has opted-out of using Ananos Tipper.",
     StatusResponse.CANNOT_SEND_TO_YOURSELF: "You cannot send to yourself.",
     StatusResponse.SEND_TO_ADDRESS_FAILED: "The amount could not be sent to the specified address. Make sure you have a trustline with Ananos and enough XLM.",
-    StatusResponse.NOT_ENOUGH_XLM: "Sorry, my account doesn't have enough XLM to pay the withdrawal fee at this time. Please consider donating some."
+    StatusResponse.NOT_ENOUGH_XLM: "Sorry, my account doesn't have enough XLM to pay the withdrawal fee at this time. Please consider donating some.",
+    StatusResponse.NO_TRUSTLINE: "The account you specified does not have a trustline with Ananos. This is required by the Stellar network."
 }
 
 OPT_IN = """
