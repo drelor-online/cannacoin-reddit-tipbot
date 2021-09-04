@@ -5,18 +5,18 @@ from enum import IntEnum
 COMMENT_FOOTER = """\n\n
 ***\n\n
 [*^(Ananos)*](https://ananos.tk)*^( | )*
-[*^(Ananos Tipper)*](https://github.com/swartbeens/ananos_reddit_tipbot)*^( | )*
+[*^(Ananos Tipper)*](https://github.com/swartbeens/ananos-stellar-reddit-tipbot)*^( | )*
 [*^(Opt Out)*](https://reddit.com/message/compose/?to=ananos_tipbot&subject=command&message=opt-out)
 """
 
 HELP = """
 Help from Stellar Ananos Tipper! This bot handles tips via the Stellar [Ananos](https://ananos.tk) currency.
-[Visit us on GitHub](https://github.com/swartbeens/ananos_reddit_tipbot) for more information on its use and its status. Be sure to read the 
-[Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service)\n\n
+[Visit us on GitHub](https://github.com/swartbeens/ananos-stellar-reddit-tipbot) for more information on its use and its status. Be sure to read the 
+[Terms of Service](https://github.com/swartbeens/ananos-stellar-reddit-tipbot#terms-of-service).\n
 
-If you do not accept the Terms of Service, or do not with to participate, please respond with the text `opt-out`.\n\n
+If you do not accept the Terms of Service, or do not wish to participate, please respond with the text `opt-out`.\n\n
 
-Ananos Tipper works in two ways -- either publicly tip a user on a subreddit, or send a PM to /u/Ananos_tipbot with a PM command below.\n\n
+Ananos Tipper works in two ways -- either publicly tip a user on a subreddit, or send a PM to /u/Ananos_tipbot with a command below.\n\n
 To tip 2 Ananos on a tracked subreddit, add the following to the beginning of end of your comment:\n
     !ananos 2
 To tip anywhere on reddit, tag the bot as such (it won't post on these subreddits, but it will PM the users):\n
@@ -33,15 +33,15 @@ For PM commands, create a new message with any of the following commands (be sur
     'opt-out' - Disables your account
     'opt-in' - Re-enables your account 
     'help' - Get this help message\n
-For example, if you wanted to send 42 Ananos to user `rambamtyfus`, reply:\n
-    send 42 rambamtyfus\n
+For example, if you wanted to send 25 Ananos to user `rambamtyfus`, reply:\n
+    send 25 rambamtyfus\n    
 If you have any questions or bug fixes, please reach out on the [Ananos subreddit](https://reddit.com/r/ananos).\n
 The Ananos tip bot is based on the Banano tipbot. Check out the [Banano subreddit](https://reddit.com/r/banano) as well!"""
 
 WELCOME_CREATE = """
 Welcome to Stellar Ananos Tipper, a reddit tip bot which allows you to tip and send the [Ananos](https://Ananos.cc) currency to your favorite redditors! 
 Your account is **active**.\nDeposit Ananos by sending it to the address `%s` using your Ananos deposit memo `%s`. By using this service, you agree 
-to the [Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service).\n\n
+to the [Terms of Service](https://github.com/swartbeens/ananos-stellar-reddit-tipbot#terms-of-service).\n\n
 
 If you do not accept the Terms of Service, or do not with to participate, please respond with the text `opt-out`.\n\n
 
@@ -62,7 +62,7 @@ There are also PM commands by [messaging](https://reddit.com/message/compose/?to
 WELCOME_TIP = """
 Welcome to Stellar Ananos Tipper, a reddit tip bot which allows you to tip and send the [Ananos](https://ananos.tk) Currency to your favorite redditors! 
 You have just received a Ananos tip in the amount of %s Ananos.\n\n
-By using this service, you agree to the [Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service).\n\n
+By using this service, you agree to the [Terms of Service](https://github.com/swartbeens/ananos-stellar-reddit-tipbot#terms-of-service).\n\n
 
 If you do not accept the Terms of Service, or do not with to participate, please respond with the text `opt-out`.\n\n
 ***\n\n

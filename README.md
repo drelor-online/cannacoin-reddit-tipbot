@@ -1,11 +1,11 @@
 
   
 
-# Ananos Reddit tip bot 
+# Ananos Stellar Reddit tip bot 
 
   
 
-...is a reddit tipping service to easily give (Stellar) Ananos to your favorite redditors! [Ananos](https://ananos.tk) is a feeless, instant, rich in vitamin C cryptocurrency. Before using Ananos Tipper, please take a look at the [Terms of Service](https://github.com/swartbeens/ananos_reddit_tipbot#terms-of-service).
+...is a reddit tipping service to easily give (Stellar) Ananos to your favorite redditors! [Ananos](https://ananos.tk) is a feeless, instant, rich in vitamin C cryptocurrency. Before using Ananos Tipper, please take a look at the [Terms of Service](https://github.com/swartbeens/ananos-stellar-reddit-tipbot#terms-of-service).
 
   
 
