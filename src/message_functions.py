@@ -432,7 +432,7 @@ def handle_send(message):
         if not account_has_trustline(recipient_info["address"], CURRENCY, CURRENCY_ISSUER):
             response["status"] = StatusResponse.NO_TRUSTLINE
             return response            
-        LOGGER.info(f"Sending Ananos: {sender_info['username']} {sender_info['memo']} {recipient_info['address']} {response['amount']}")
+        LOGGER.info(f"Sending Ananos: {response['amount']} {recipient_info['address']} {sender_info['memo']}")
         succeeded = send_payment(recipient_info["address"], response["amount"], sender_info["memo"], fee)
         if succeeded:
             response["status"] = StatusResponse.SENT_TO_ADDRESS

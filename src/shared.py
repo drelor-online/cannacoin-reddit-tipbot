@@ -55,15 +55,8 @@ except Exception as err:
 
 class NumberUtil(object):
     @classmethod
-    def truncate_digits(cls, in_number: float, max_digits: int) -> float:
-        """Restrict maximum decimal digits by removing them"""
-        working_num = int(in_number * (10 ** max_digits))
-        return working_num / (10 ** max_digits)
-
-    @classmethod
     def format_float(cls, in_number: float) -> str:
         """Format a float with un-necessary chars removed. E.g: 1.0000 == 1"""
-        in_number = cls.truncate_digits(in_number, 2)
         as_str = f"{in_number:.2f}".rstrip('0')            
         if as_str[len(as_str) - 1] == '.':
             as_str = as_str.replace('.', '')
@@ -210,3 +203,4 @@ class Validators():
 
         except stellar_sdk.exceptions.Ed25519PublicKeyInvalidError:
             return False
+
