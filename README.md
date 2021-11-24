@@ -1,27 +1,27 @@
 
   
 
-# Ananos Stellar Reddit tip bot 
+# Poopstar Reddit Tip Bot 
 
   
 
-...is a reddit tipping service to easily give (Stellar) Ananos to your favorite redditors! [Ananos](https://ananos.tk) is a feeless, instant, rich in vitamin C cryptocurrency. Before using Ananos Tipper, please take a look at the [Terms of Service](https://github.com/swartbeens/ananos-stellar-reddit-tipbot#terms-of-service).
-
-  
-
-  
-
-It is a fork and modification of the [Banano](https://banano.cc) reddit tip bot created by /u/bbedward - which is available on [GitHub](https://github.com/BananoCoin/banano_reddit_tipbot).
+...is a reddit tipping service to easily give Poopstar to your favorite Redditors! [Poopstar](https://poopstar.online) is a stinky, filthy but wholesome universal cryptocurrency based on the Stellar network. Before using Poopstar Tipper, please take a look at the [Terms of Service](https://github.com/drelor-online/poopstar-reddit-tipbot#terms-of-service).
 
   
 
   
 
-### To get started with the Ananos tip bot, either:
+It is a fork and modification of the [Ananos (Stellar) Reddit Tipbot by swartbeens] (https://github.com/swartbeens/ananos-stellar-reddit-tipbot) which is a fork and modification of the [Banano](https://banano.cc) reddit tip bot created by /u/bbedward - which is available on [GitHub](https://github.com/BananoCoin/banano_reddit_tipbot).
 
   
 
-A) **Create an account** by [sending a message](https://reddit.com/message/compose/?to=ananos_tipbot&subject=command&message=create) to /u/ananos_tipbot with 'create' or 'register' in the message body.
+  
+
+### To get started with the Poopstar Tip Bot, either:
+
+  
+
+A) **Create an account** by [sending a message](https://reddit.com/message/compose/?to=poopstar_tipbot&subject=command&message=create) to /u/poopstar_tipbot with 'create' or 'register' in the message body.
 
   
 
@@ -29,11 +29,11 @@ A) **Create an account** by [sending a message](https://reddit.com/message/compo
 
   
 
-B) **Receive an Ananos tip** from a fellow redditor, and you will automatically have an account made! Be sure to activate it afterwards by [sending a message](https://reddit.com/message/compose/?to=ananos_tipbot&subject=command&message=create) to /u/ananos_tipbot.
+B) **Receive a Poopstar tip** from a fellow redditor, and you will automatically have an account made! Be sure to activate it afterwards by [sending a message](https://reddit.com/message/compose/?to=poopstar_tipbot&subject=command&message=create) to /u/poopstar_tipbot.
 
   
 
-Once you have funds in your account, you can tip other redditors, or send to any Ananos address via PM to /u/ananos_tipbot.
+Once you have funds in your account, you can tip other redditors, or send to any Poopstar address via PM to /u/poopstar_tipbot.
 
   
 
@@ -41,7 +41,7 @@ Once you have funds in your account, you can tip other redditors, or send to any
 
   
 
-The Ananos tip bot is intended for tipping small amounts on Reddit posts and replies.
+The Poopstar tip bot is intended for tipping small amounts on Reddit posts and replies.
 
   
 
@@ -53,19 +53,19 @@ On supported subreddits, you can send a tip like this:
 
   
 
-`!ananos 1 This is great!`
+`!poop 1 This is great!`
 
   
 
   
 
-This will tip a redditor 1 Ananos. !ananos <amount> must be the first thing in your message OR the last thing. Such, this is also a valid tip:
+This will tip a redditor 1 Poopstar. !poop <amount> must be the first thing in your message OR the last thing. Such, this is also a valid tip:
 
   
 
   
 
-`This is great! !ananos 1`
+`This is great! !poop 1`
 
   
 
@@ -77,7 +77,7 @@ Or from anywhere on reddit, you can tip a commenter by mentioning the tip bot:
 
   
 
-`/u/ananos_tipbot 1`
+`/u/poopstar_tipbot 1`
 
   
   
@@ -94,32 +94,32 @@ If the subreddit is a friendly subreddit, the bot will respond with a message. I
 
   
 
-The Ananos tip bot also works by PM. [Send a message](https://reddit.com/message/compose/?to=ananos_tipbot&subject=command&message=type_command_here) to /u/ananos_tipbot for a variety of actions.
+The Poopstar tip bot also works by PM. [Send a message](https://reddit.com/message/compose/?to=poopstar_tipbot&subject=command&message=type_command_here) to /u/poopstar_tipbot for a variety of actions.
 
   
 
   
 
-To send 1 Ananos to rambamtyfyus, include this text in the message body:
+To send 1 Poopstar to drelor, include this text in the message body:
 
   
 
   
 
-`send 1 rambamtyfus`
+`send 1 drelor`
 
   
   
 
   
 
-To send 1 Ananos to Stellar address GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB, include this text in the message body:
+To send 1 Poopstar to Stellar address G...., include this text in the message body:
 
   
 
   
 
-`send 1 GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB`
+`send 1 G...`
 
   
 
@@ -131,11 +131,11 @@ or send all your balance:
 
   
 
-`send all GBB3O7N2VJNRWMGXLZ37BP4SWFE456QCBPOYMT3M6TE6QHIZRMIYWPQB`
+`send all G...`
 
   
 
-*Note that the address you are sending to must have a trustline with Ananos address on Stellar (GAB4YW6ZBV73IFQDSVYGKOXTLWX67LUDXRAXHUW2U5EXIFCMAWYHEHL7) and you cannot send from an exchange wallet.*
+*Note that the address you are sending to must have a trustline with the Poopstar address on Stellar (GBDJHODFOQHSBZ4B3PTLMDBXTSIQWD6V6RZT5YNOFW5P44LTH6P4QEAL) and you cannot send from an exchange wallet.*
 
   
 
@@ -150,7 +150,7 @@ There are many other commands.
 'create' - Create a new account if one does not exist
 'help' - Get this help message 
 'history <optional: number of records>' - Retrieves tip bot commands.  
-'send <amount or all, optional: Currency> <user/address>' - Send Ananosto a reddit user or an address  
+'send <amount or all, optional: Currency> <user/address>' - Send Poopstar to a reddit user or an address  
 'silence <yes/no>' - (default 'no') Prevents the bot from sending you tip notifications or tagging in posts  
 'subreddit <subreddit> <'activate'/'deactivate'> <option>' - Subreddit Moderator Controls - Enabled Tipping on Your Sub (`silent`, `full`)  
 'opt-out' - Disables your account.  
@@ -163,19 +163,19 @@ There are many other commands.
 
   
 
-If you are a moderator of a subreddit, and would like to tipping to your sub, use the `subreddit` command. For example, to activate tipping on the r/banano subreddit, I send a PM to the bot saying:
+If you are a moderator of a subreddit, and would like to tipping to your sub, use the `subreddit` command. For example, to activate tipping on the r/ananos subreddit, I send a PM to the bot saying:
 
   
 
   
 
-`subreddit banano activate`
+`subreddit ananos activate`
 
   
 
   
 
-This will allow the bot to look for !ananos commands and respond to posts in that subreddit.
+This will allow the bot to look for !poop commands and respond to posts in that subreddit.
 
   
 
@@ -185,7 +185,7 @@ This will allow the bot to look for !ananos commands and respond to posts in tha
 
   
 
-`subreddit banano activate silent`
+`subreddit ananos activate silent`
 
   
   
@@ -200,7 +200,7 @@ To deactivate, simply PM
 
   
 
-`subreddit banano deactivate`
+`subreddit ananos deactivate`
 
   
 
@@ -208,6 +208,8 @@ To deactivate, simply PM
 
 ### Here's a few other great links:
 
+
+[Poopstar Subreddit](https://reddit.com/r/poopstar) -- Post any questions about Poopstar  
   
 
 [Ananos Subreddit](https://reddit.com/r/ananos) -- Post any questions about Ananos
@@ -234,11 +236,11 @@ To deactivate, simply PM
 
   
 
-* Do not keep a lot of Ananos in your tip bot account! The tip bot is for tipping small amounts ONLY.
+* Do not keep a lot of Poopstar in your tip bot account! The tip bot is for tipping small amounts ONLY.
 
   
 
-* You accept the risks of using this tip bot -- We won't steal your Ananos, but they might be lost at any point, and we are at no obligation to replace them. Don't put in more than you're willing to lose.
+* You accept the risks of using this tip bot -- We won't steal your Poopstar, but they might be lost at any point, and we are at no obligation to replace them. Don't put in more than you're willing to lose.
 
   
 
@@ -283,7 +285,7 @@ This is to prevent unintentional tips! If the program simply scanned the entire 
   
 Unfortunately, Stellar requires fees to send transactions. The tipping happens off-chain to circumvent this. However, the bot needs to pay a small amount of XLM at each withdrawal. 
 You can prevent withdrawal problems and support the bot by donating a little XLM to the bot's address: 
-GBOVBMRWWE7QNHSRCCBO3QM36VUJ3LRQ7GZH6UOQSRLWRUDWUZ5ALTNE.
+GDEU67YJKQSNO4RW3KQBNUZ4AYAQ4V2MPYCFLG254RBTSFOXYRUVH3XZ.
 
   
 
@@ -321,7 +323,7 @@ Probably not. It's most likely the bot was temporarily disconnected. If a comman
 
   
 
-Post it on the [Ananos subreddit](https://reddit.com/r/Ananos) .
+Post it on the [Poopstar subreddit](https://reddit.com/r/Poopstar) .
 
   
 
@@ -375,8 +377,8 @@ If a reddit tip is a reply to a reply, it's better to keep a short message with 
 
   
 
-* 210 - Failed to send funds to Stellar address. Check that you have a trustline with Ananos and enough XLM funds.
+* 210 - Failed to send funds to Stellar address. Check that you have a trustline with Poopstar and enough XLM funds.
 
 * 220 - Not enough XLM to perform withdrawal.
 
-* 230 - Withdrawal account has no Ananos trustline.
+* 230 - Withdrawal account has no Poopstar trustline.
