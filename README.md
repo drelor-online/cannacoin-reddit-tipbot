@@ -11,7 +11,7 @@
 
   
 
-It is a fork and modification of the [Ananos (Stellar) Reddit Tipbot by swartbeens] (https://github.com/swartbeens/ananos-stellar-reddit-tipbot) which is a fork and modification of the [Banano](https://banano.cc) reddit tip bot created by /u/bbedward - which is available on [GitHub](https://github.com/BananoCoin/banano_reddit_tipbot).
+It is a fork and modification of the [Ananos (Stellar) Reddit Tipbot by swartbeens](https://github.com/swartbeens/ananos-stellar-reddit-tipbot) which is a fork and modification of the [Banano](https://banano.cc) reddit tip bot created by /u/bbedward - which is available on [GitHub](https://github.com/BananoCoin/banano_reddit_tipbot).
 
   
 
@@ -262,7 +262,7 @@ To deactivate, simply PM
 
   
 
-## Why does the message have to start or end with !ananos<amount>?
+## Why does the message have to start or end with !poop<amount>?
 
   
 
