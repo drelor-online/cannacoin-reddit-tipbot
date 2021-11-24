@@ -276,7 +276,7 @@ This is to prevent unintentional tips! If the program simply scanned the entire 
 
   
 
-**NO! Unless you and you alone control your private keys, your funds are never safe!** Please don't keep more than a small dose of Ananos on the tip bot at any time! **Use at your own risk!**
+**NO! Unless you and you alone control your private keys, your funds are never safe!** Please don't keep more than a small dose of Poopstar on the tip bot at any time! **Use at your own risk!**
 
   
   
