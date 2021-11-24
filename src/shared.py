@@ -10,7 +10,7 @@ from hashlib import blake2b
 from peewee import *
 from playhouse.pool  import PooledMySQLDatabase
 
-LOGGER = logging.getLogger("ananos-reddit-tipbot")
+LOGGER = logging.getLogger("poopstar-reddit-tipbot")
 LOGGER.setLevel(logging.DEBUG)
 handler = logging.StreamHandler(sys.stdout)
 formatter = logging.Formatter("%(asctime)s;%(levelname)s;%(message)s", "%Y-%m-%d %H:%M:%S %z")
