@@ -188,7 +188,7 @@ def handle_history(message):
                     amount = from_stroop(int(result.amount))
                     if result.notes == "sent to user":
                         response += (
-                            "%s: %s | %s Ananos to %s | reddit object: %s | %s\n\n"
+                            "%s: %s | %s Poopstar to %s | reddit object: %s | %s\n\n"
                             % (
                                 result.reddit_time.strftime("%Y-%m-%d %H:%M:%S"),
                                 result.action,
@@ -200,7 +200,7 @@ def handle_history(message):
                         )
                     elif result.notes == "sent to address":
                         response += (
-                            "%s: %s | %s Ananos to %s | reddit object: %s | %s\n\n"
+                            "%s: %s | %s Poopstar to %s | reddit object: %s | %s\n\n"
                             % (
                                 result.reddit_time.strftime("%Y-%m-%d %H:%M:%S"),
                                 result.action,
@@ -212,7 +212,7 @@ def handle_history(message):
                         )
                 elif result.action == "receive":
                         response += (
-                            "%s: %s | %s Ananos | %s\n\n"
+                            "%s: %s | %s Poopstar | %s\n\n"
                             % (
                                 result.reddit_time.strftime("%Y-%m-%d %H:%M:%S"),
                                 result.action,
@@ -336,15 +336,15 @@ def handle_stats(message):
     if not str(message.author).lower() in TIPBOT_OWNERS:
         return text.SUBREDDIT["not_maintainer"]
     off_chain_balance = Account.select(fn.SUM(Account.balance).alias('sum_balance')).get()
-    response = f"Off-chain balance: {from_stroop(off_chain_balance.sum_balance):.2f} Ananos  \n\n"
+    response = f"Off-chain balance: {from_stroop(off_chain_balance.sum_balance):.2f} Poopstar  \n\n"
     main_account_balances = get_balances(ACCOUNT)
     if "ananos" in main_account_balances:
         balance = main_account_balances["ananos"]
-        response += f"On-chain balance: {from_stroop(balance):.2f} Ananos  \n\n"
+        response += f"On-chain balance: {from_stroop(balance):.2f} Poopstar  \n\n"
     response += "\nTop accounts:  \n\n"
     accounts = Account.select(Account.username, Account.balance).order_by(Account.balance.desc()).limit(10)
     for idx, account in enumerate(accounts):
-        response += f"{idx:02d}. {account.username} | {from_stroop(account.balance):.2f} Ananos  \n\n"
+        response += f"{idx:02d}. {account.username} | {from_stroop(account.balance):.2f} Poopstar  \n\n"
     return response  
 
 
@@ -417,7 +417,7 @@ def handle_send(message):
         elif not recipient_info["opt_in"]: # Existing account, check if opted out
             response["status"] = StatusResponse.USER_OPTED_OUT
             return response
-        LOGGER.info(f"Tipping Ananos: {sender_info['username']} {recipient_name} {response['amount']}")
+        LOGGER.info(f"Tipping Poopstar: {sender_info['username']} {recipient_name} {response['amount']}")
         account_tip(sender_info["username"], recipient_name, response["amount"])
         History.update(notes = "sent to user", recipient_username = recipient_name, 
                        amount = str(response["amount"]), return_status="cleared").where(History.id == entry_id).execute()        
@@ -432,7 +432,7 @@ def handle_send(message):
         if not account_has_trustline(recipient_info["address"], CURRENCY, CURRENCY_ISSUER):
             response["status"] = StatusResponse.NO_TRUSTLINE
             return response            
-        LOGGER.info(f"Sending Ananos: {response['amount']} {recipient_info['address']} {sender_info['memo']}")
+        LOGGER.info(f"Sending Poopstar: {response['amount']} {recipient_info['address']} {sender_info['memo']}")
         succeeded = send_payment(recipient_info["address"], response["amount"], sender_info["memo"], fee)
         if succeeded:
             response["status"] = StatusResponse.SENT_TO_ADDRESS
@@ -491,7 +491,7 @@ def handle_opt_in(message):
     return response
 
 
-# Determines if a recipient is an Ananos address or a redditor.
+# Determines if a recipient is an Poopstar address or a redditor.
 def parse_recipient_username(recipient_text):
     # remove the /u/ or u/
     if recipient_text[:3].lower() == "/u/":
