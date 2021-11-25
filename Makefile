@@ -6,10 +6,10 @@ remove: env-remove
 
 env-setup:
 	conda env create -f environment.yml
-	conda activate ananos-reddit-tipbot
+	conda activate poopstar-reddit-tipbot
 
 env-remove:
-	conda env remove -n ananos-reddit-tipbot -y
+	conda env remove -n poopstar-reddit-tipbot -y
 
 module-setup:
 	pip install -e src
