@@ -135,8 +135,9 @@ def send_payment(destination_account, amount, memo, fee):
             .append_payment_op(
                 destination = destination_account,
                 amount = str(from_stroop(amount)),
-                asset_code = CURRENCY,
-                asset_issuer = CURRENCY_ISSUER
+                #asset_code = CURRENCY,
+                #asset_issuer = CURRENCY_ISSUER
+                asset = Asset(CURRENCY, CURRENCY_ISSUER)
             )
             .set_timeout(20)
             .build()
