@@ -338,8 +338,8 @@ def handle_stats(message):
     off_chain_balance = Account.select(fn.SUM(Account.balance).alias('sum_balance')).get()
     response = f"Off-chain balance: {from_stroop(off_chain_balance.sum_balance):.2f} Poopstar  \n\n"
     main_account_balances = get_balances(ACCOUNT)
-    if "PSTR" in main_account_balances:
-        balance = main_account_balances["PSTR"]
+    if "pstr" in main_account_balances:
+        balance = main_account_balances["pstr"]
         response += f"On-chain balance: {from_stroop(balance):.2f} Poopstar  \n\n"
     response += "\nTop accounts:  \n\n"
     accounts = Account.select(Account.username, Account.balance).order_by(Account.balance.desc()).limit(10)
