@@ -302,7 +302,7 @@ def handle_transactions():
             payments = tipper_rpc.get_transaction_payments(transaction['hash'])
             amount = 0
             for payment in payments:
-                if payment["to"] == ACCOUNT and payment["asset"] == "PSTR":
+                if payment["to"] == ACCOUNT and payment["asset"] == "CANNACOIN":
                     amount += payment["amount"]
             record = Transaction (
                 time = transaction['date'],
@@ -314,12 +314,12 @@ def handle_transactions():
             )
             record.save()
             fee = tipper_rpc.get_fee()            
-            # Don't process a transaction with zero amount of Poopstar.
+            # Don't process a transaction with zero amount of Cannacoin.
             if amount <= 0:
                 continue
             # Check for memo
             if not transaction["memo"]:
-                LOGGER.info(f"Returning deposited Poopstar, no user specified: {transaction['hash']} {transaction['source_account']} {amount}")
+                LOGGER.info(f"Returning deposited Cannacoin, no user specified: {transaction['hash']} {transaction['source_account']} {amount}")
                 tipper_rpc.send_payment(transaction["source_account"], amount, "no user specified", fee)            
                 Transaction.update(notes = "no user specified").where(Transaction.hash == transaction['hash']).execute()
                 continue
@@ -333,14 +333,14 @@ def handle_transactions():
             try:
                 _ = getattr(REDDIT.redditor(recipient_name), "is_suspended", False)                
             except:
-                LOGGER.info(f"Returning deposited Poopstar, user unknown: {transaction['hash']} {transaction['source_account']} {amount}  {transaction['memo']}")
+                LOGGER.info(f"Returning deposited Cannacoin, user unknown: {transaction['hash']} {transaction['source_account']} {amount}  {transaction['memo']}")
                 tipper_rpc.send_payment(transaction["source_account"], amount, "unknown user specified", fee)            
                 Transaction.update(notes = "unknown user").where(Transaction.hash == transaction['hash']).execute()
                 continue
             # Get account info            
             recipient_info = account_info(recipient_name)            
             if recipient_info is None: 
-                LOGGER.info(f"Returning deposited Poopstar, user has no account: {transaction['hash']} {transaction['source_account']} {amount}  {transaction['memo']}")
+                LOGGER.info(f"Returning deposited Cannacoin, user has no account: {transaction['hash']} {transaction['source_account']} {amount}  {transaction['memo']}")
                 tipper_rpc.send_payment(transaction["source_account"], amount, "user has no account", fee)            
                 Transaction.update(notes = "user has no account").where(Transaction.hash == transaction['hash']).execute()
                 continue
