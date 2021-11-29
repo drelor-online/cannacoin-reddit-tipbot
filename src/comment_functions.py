@@ -133,7 +133,7 @@ def send_from_comment(message):
     if sender_info["username"] == recipient_info["username"]:
         response["status"] = StatusResponse.CANNOT_SEND_TO_YOURSELF
         return response
-    LOGGER.info(f"Tipping Poopstar: {sender_info['username']} {recipient_info['username']} {response['amount']}")
+    LOGGER.info(f"Tipping Cannacoin: {sender_info['username']} {recipient_info['username']} {response['amount']}")
     account_tip(sender_info["username"], recipient_info['username'], response["amount"])
     # Update the sql and send the PMs
     History.update(
