@@ -18,7 +18,7 @@ handler.setFormatter(formatter)
 LOGGER.addHandler(handler)
 
 config = configparser.ConfigParser()
-config.read("tipper.ini")
+config.read(os.path.join(os.path.dirname(__file__), "tipper.ini"))
 
 # if we have a file, use it. Otherwise, load testing defaults
 try:
