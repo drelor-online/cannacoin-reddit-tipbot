@@ -21,7 +21,7 @@ It is a fork and modification of the [Ananos (Stellar) Reddit Tipbot by swartbee
 
   
 
-A) **Create an account** by [sending a message](https://reddit.com/message/compose/?to=cannacoin_tipbot&subject=command&message=create) to /u/cannacoin_tipbot with 'create' or 'register' in the message body.
+A) **Create an account** by [sending a message](https://reddit.com/message/compose/?to=Canna_Tips&subject=command&message=create) to /u/Canna_Tips with 'create' or 'register' in the message body.
 
   
 
@@ -29,11 +29,11 @@ A) **Create an account** by [sending a message](https://reddit.com/message/compo
 
   
 
-B) **Receive a Cannacoin tip** from a fellow redditor, and you will automatically have an account made! Be sure to activate it afterwards by [sending a message](https://reddit.com/message/compose/?to=cannacoin_tipbot&subject=command&message=create) to /u/cannacoin_tipbot.
+B) **Receive a Cannacoin tip** from a fellow redditor, and you will automatically have an account made! Be sure to activate it afterwards by [sending a message](https://reddit.com/message/compose/?to=Canna_Tips&subject=command&message=create) to /u/Canna_Tips.
 
   
 
-Once you have funds in your account, you can tip other redditors, or send to any Cannacoin address via PM to /u/cannacoin_tipbot.
+Once you have funds in your account, you can tip other redditors, or send to any Cannacoin address via PM to /u/Canna_Tips.
 
   
 
@@ -77,7 +77,7 @@ Or from anywhere on reddit, you can tip a commenter by mentioning the tip bot:
 
   
 
-`/u/cannacoin_tipbot 1`
+`/u/Canna_Tips 1`
 
   
   
@@ -94,7 +94,7 @@ If the subreddit is a friendly subreddit, the bot will respond with a message. I
 
   
 
-The Cannacoin tip bot also works by PM. [Send a message](https://reddit.com/message/compose/?to=cannacoin_tipbot&subject=command&message=type_command_here) to /u/cannacoin_tipbot for a variety of actions.
+The Cannacoin tip bot also works by PM. [Send a message](https://reddit.com/message/compose/?to=Canna_Tips&subject=command&message=type_command_here) to /u/Canna_Tips for a variety of actions.
 
   
 
@@ -341,7 +341,7 @@ If a reddit tip is a reply to a reply, it's better to keep a short message with 
 
   
 
-* 110 - You must specify an amount and a user, e.g. `send 1 cannacoin_tipbot`.
+* 110 - You must specify an amount and a user, e.g. `send 1 Canna_Tips`.
 
   
 
